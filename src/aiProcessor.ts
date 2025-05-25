@@ -37,10 +37,10 @@ export async function askGemini(Prompt: string): Promise<string> {
 
 export async function getRoadmap(
   content: string,
-  metadata: NoteMetadata
+  metadata: NoteMetadata,
+  type: string
 ): Promise<string> {
   try {
-    const type = 'syllabus';
     const sysPrompt = getRoadmapPrompt(content, type);
 
     return await askGemini(sysPrompt);
@@ -51,11 +51,11 @@ export async function getRoadmap(
 }
 
 
-export async function generateNotesForPhase(phaseStr: string) {
+export async function generateNotesForPhase(phaseStr: string, type: string) {
   const phaseObj = JSON.parse(phaseStr) as Phase;
   console.log(`\n📘 Generating notes for phase: ${phaseObj.title}\n`);
 
-  const systemPrompt = getNotesPrompt();
+  const systemPrompt = getNotesPrompt(type);
   const subPhases = phaseObj?.subPhases;
 
   if (subPhases && typeof subPhases === 'object') {

@@ -54,17 +54,22 @@ export const getRoadmapPrompt = (content, type) => {
         NOTE: **the Roadmap should be comprehensive and beginner to advanced.**
         NOTE: **Divide the Entire portion in to several phases!! strictly.**
         NOTE: **If TYPE=syllabus then each chapter/unit should be divided in to each phase and each phase should contain at least 10-15 subphases MINIMUM**
-        NOTE: **If TYPE=chapter then each topic should be divided in to each phase and each phase should contain at least 5 subphases MINIMUM**
-        NOTE: **If TYPE=topic then u can define the phases and sub phases depending on the complexity of topic**
+        NOTE: **If TYPE=chapter then each topic should be divided in to each phase and each phase can contain multiple subphases depending on complexity of chapter/topic [keep it short mostly, since it's just a chapter, don't need unncessary subphases overly nested subphases, only what is required]**
+        NOTE: **If TYPE=topic then u can define the phases and sub phases depending on the complexity of topic, try to keep it short with examples since it's just a topic max of 2-3 phases and 1-2 nesting of subphases if reequired more by the topic then u can add else keep it way short**
 
 
         Now generate the roadmap for the above SYLLABUS.
         `;
     return prompt;
 };
-export const getNotesPrompt = () => {
+export const getNotesPrompt = (type) => {
     const prompt = `give a brief notes for the following concepts:
-    
+
+    ----------
+    for ur info: [this is use below, don't include in notes]
+    TYPE= ${type}:
+    ----------
+
     explain as if i'm a beginner and explain every method.. and the notes should be comprehensive.
 
     Please generate detailed, comprehensive educational notes that:
@@ -85,7 +90,9 @@ export const getNotesPrompt = () => {
 
     Your response should only contain the formatted notes content, without any introductory or concluding remarks.
 
-    MAKE SURE EVERYTHING IS TO MAX OF YOUR TOKEN LENGTH COVERING EVERY TOPIC OF THE CONTENT
+    NOTE:**if Type=syllabus then give a lengthy and comprehensive response with examples leaving none**
+    NOTE:**if Type=chapter then medium length notes**
+    NOTE:**if Type=topic then give a very short and conscise notes with examples all in around 20-30 lines**
     `;
     return prompt;
 };

@@ -23,9 +23,10 @@ export async function generateNotes(filePath, metadata) {
         // Extract text from the file
         console.log('Extracting text from file...');
         const extractedText = await extractTextFromFile(filePath);
+        let type = 'topic';
         // Process the content with Gemini AI
         console.log('Generating Roadmap with AI...');
-        const rawRoadmap = await getRoadmap(extractedText, metadata);
+        const rawRoadmap = await getRoadmap(extractedText, metadata, type);
         const rawRoadmapStr = rawRoadmap.replace(/^```[a-z]*\n?/i, "").replace(/```$/, "").trim();
         const filteredRoadmap = JSON.parse(rawRoadmapStr);
         console.log('Filtered Roadmap:', filteredRoadmap);
@@ -36,8 +37,9 @@ export async function generateNotes(filePath, metadata) {
         for (const [phaseKey, phase] of phaseEntries) {
             try {
                 console.log(`📘 Generating notes for phase: ${phase.title}`);
+                let type = 'topic';
                 const phaseString = JSON.stringify(phase);
-                const data = await generateNotesForPhase(phaseString);
+                const data = await generateNotesForPhase(phaseString, type);
                 allNotes.push({
                     phaseKey,
                     title: data.phaseTitle,

@@ -24,9 +24,8 @@ export async function askGemini(Prompt) {
         throw error;
     }
 }
-export async function getRoadmap(content, metadata) {
+export async function getRoadmap(content, metadata, type) {
     try {
-        const type = 'syllabus';
         const sysPrompt = getRoadmapPrompt(content, type);
         return await askGemini(sysPrompt);
     }
@@ -35,10 +34,10 @@ export async function getRoadmap(content, metadata) {
         throw error;
     }
 }
-export async function generateNotesForPhase(phaseStr) {
+export async function generateNotesForPhase(phaseStr, type) {
     const phaseObj = JSON.parse(phaseStr);
     console.log(`\n📘 Generating notes for phase: ${phaseObj.title}\n`);
-    const systemPrompt = getNotesPrompt();
+    const systemPrompt = getNotesPrompt(type);
     const subPhases = phaseObj?.subPhases;
     if (subPhases && typeof subPhases === 'object') {
         const subNotes = [];
